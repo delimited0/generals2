@@ -27,5 +27,3 @@ I believe `Neural networks` and `Deep learning` will make the bot better and mar
 
 ## License
 The Project is under EPL 1.0 License.
-
-
