@@ -1,19 +1,7 @@
-# Generals IO Python Bot - TNT  (Working On It)
+# Generals IO Python Bot 
 
-It is a bot for the [generals.io](http://bot.generals.io) 
-
-## Why call it TNT
-
-In the start of game, conquer more lands and conquer faster will get a big advantage. Just like a bomb, exexplosion in a very short time. So I named it TNT.
-
-## Replays:
-[11/02/2017](
-http://bot.generals.io/replays/BeEefaiOx)
-
-## Plan
-
-I believe `Neural networks` and `Deep learning` will make the bot better and marter. So they are in the plan too. 
-
+## Credits
+Originally [toshima's generals io client](https://github.com/toshima/generalsio).
 
 ## How To:
 0. requirements: `pip install -r requirements.txt`
@@ -21,8 +9,7 @@ I believe `Neural networks` and `Deep learning` will make the bot better and mar
 1. and rename it to `config.py`
 1. choose the bot, for example `python bot_TNT.py`
 
-## Credits
-[toshima's generals io client](https://github.com/toshima/generalsio)
+
 
 
 ## License
