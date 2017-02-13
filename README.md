@@ -9,8 +9,5 @@ Originally [toshima's generals io client](https://github.com/toshima/generalsio)
 1. and rename it to `config.py`
 1. choose the bot, for example `python bot_TNT.py`
 
-
-
-
 ## License
 The Project is under EPL 1.0 License.

@@ -1,17 +1,23 @@
 #!/bin/python
-import generals
+from generals_io_client import generals
 import logging
+import sys
+
+userid = sys.argv[1]
+username = sys.argv[2]
+gameid = sys.argv[3]
 
 logging.basicConfig(level=logging.DEBUG)
 
 # 1v1
-g = generals.Generals('your userid', 'your username', '1v1')
+# g = generals.Generals('your userid', 'your username', '1v1')
 
 # ffa
 # g = generals.Generals('your userid', 'your username', 'ffa')
 
 # private game
 # g = generals.Generals('your userid', 'your username', 'private', 'your gameid')
+g = generals.Generals(userid, username, 'private', gameid)
 
 # 2v2 game
 # g = generals.Generals('your userid', 'your username', 'team')

@@ -118,14 +118,6 @@ def which_corp_near_there( tiles_we_own, destination):
     return (general_y,general_x)
 
 
-
-
-
-
-
-
-
-
 def defeat():
     pass
 
