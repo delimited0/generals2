@@ -61,8 +61,11 @@ def get_topology(tiles):
 					frontier.append((y, x))
 	return interior, frontier
 
-def find_nearest_frontier(y, x, frontier):
-	return
+def find_nearest_frontier(p, frontier):
+	dists = [calc_distance(p, q) for q in frontier]
+	min_dist = min(dists)
+	min_idx = dists.index(min_dist)	
+	return frontier[min_idx]
 
 for update in g.get_updates():
 	pidx = update['player_index']
@@ -80,6 +83,28 @@ for update in g.get_updates():
 
 	interior, frontier = get_topology(tiles)
 
+	commands = 0
+	for tile in interior:
+		y, x = tile[0], tile[1]
+		if armies[y][x] > 1 and commands < 5:
+			target = find_nearest_frontier(tile, frontier)
+			g.move(tile[0], tile[1], target[0], target[1])
+			commands += 1
+
+	commands = 0
+
+	for tile in frontier:
+		y, x = tile[0], tile[1]
+		if armies[y][x] > 3:
+			if tiles[y+1][x] != pidx:
+				g.move(tile[0], tile[1], y+1, x)
+			elif tiles[y-1][x] != pidx:
+				g.move(tile[0], tile[1], y-1, x)		
+			elif tiles[y][x+1] != pidx:
+				g.move(tile[0], tile[1], y, x+1)
+			elif tiles[y][x-1] != pidx:
+				g.move(tile[0], tile[1], y, x-1)
+
 
 	basic_turn_info = '''
 	interior: %s
@@ -88,4 +113,3 @@ for update in g.get_updates():
 
 	print(basic_turn_info)
 
-	# for tile in interior:
