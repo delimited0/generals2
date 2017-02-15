@@ -2,6 +2,7 @@ from generals_io_client import generals
 import logging
 import sys
 import math
+import bot
 
 userid = sys.argv[1]
 username = sys.argv[2]
@@ -67,6 +68,16 @@ def find_nearest_frontier(p, frontier):
 	min_idx = dists.index(min_dist)	
 	return frontier[min_idx]
 
+
+
+for update in g.get_updates():
+	try:
+		pidx = update['player_index']
+		propgator = bot.Bot(pidx)
+		break
+	except AttributeError:
+		pass
+
 for update in g.get_updates():
 	pidx = update['player_index']
 	try:
@@ -81,35 +92,39 @@ for update in g.get_updates():
 	cities = update['cities']
 	turn = update['turn']
 
-	interior, frontier = get_topology(tiles)
+	propgator.update_status(tiles, armies)
+	propgator.reinforce(g)
+	propgator.expand(g, tiles)
 
-	commands = 0
-	for tile in interior:
-		y, x = tile[0], tile[1]
-		if armies[y][x] > 1 and commands < 5:
-			target = find_nearest_frontier(tile, frontier)
-			g.move(tile[0], tile[1], target[0], target[1])
-			commands += 1
+	# interior, frontier = get_topology(tiles)
 
-	commands = 0
+	# commands = 0
+	# for tile in interior:
+	# 	y, x = tile[0], tile[1]
+	# 	if armies[y][x] > 1 and commands < 5:
+	# 		target = find_nearest_frontier(tile, frontier)
+	# 		g.move(tile[0], tile[1], target[0], target[1])
+	# 		commands += 1
 
-	for tile in frontier:
-		y, x = tile[0], tile[1]
-		if armies[y][x] > 3:
-			if tiles[y+1][x] != pidx:
-				g.move(tile[0], tile[1], y+1, x)
-			elif tiles[y-1][x] != pidx:
-				g.move(tile[0], tile[1], y-1, x)		
-			elif tiles[y][x+1] != pidx:
-				g.move(tile[0], tile[1], y, x+1)
-			elif tiles[y][x-1] != pidx:
-				g.move(tile[0], tile[1], y, x-1)
+	# commands = 0
 
+	# for tile in frontier:
+	# 	y, x = tile[0], tile[1]
+	# 	if armies[y][x] > 3:
+	# 		if tiles[y+1][x] != pidx:
+	# 			g.move(tile[0], tile[1], y+1, x)
+	# 		elif tiles[y-1][x] != pidx:
+	# 			g.move(tile[0], tile[1], y-1, x)		
+	# 		elif tiles[y][x+1] != pidx:
+	# 			g.move(tile[0], tile[1], y, x+1)
+	# 		elif tiles[y][x-1] != pidx:
+	# 			g.move(tile[0], tile[1], y, x-1)
 
 	basic_turn_info = '''
 	interior: %s
 	frontier: %s
-	''' %(interior, frontier)
+	armies: %s
+	''' %(propgator.interior, propgator.frontier, propgator.armies)
 
 	print(basic_turn_info)
 
